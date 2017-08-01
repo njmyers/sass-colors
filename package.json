@@ -1,0 +1,72 @@
+{
+  "name": "sass-colors",
+  "version": "1.0.0",
+  "description": "A rainbow of sass colors and naming system. Include this rainbow in your stylesheet for easy boilerplate colors.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm-run-all --parallel watch:src watch:lint",
+    "nodemon-lint": "npm-run-all --parallel watch:server watch:lint",
+    "watch:server": "nodemon app.js --exec babel-node",
+    "watch:src": "babel-node app.js",
+    "experiment": "babel-node default.js",
+    "security-check": "nsp check",
+    "localtunnel": "lt --port 4040",
+    "share": "npm-run-all --parallel watch:src localtunnel",
+    "lint": "esw app.js models controllers config",
+    "watch:lint": "esw -w app.js colors.js src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/njmyers/sass-colors.git"
+  },
+  "keywords": [
+    "sass",
+    "colors",
+    "css",
+    "rgba"
+  ],
+  "author": "Nick Myers",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/njmyers/sass-colors/issues"
+  },
+  "homepage": "https://github.com/njmyers/sass-colors#readme",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.1",
+    "babel-preset-latest": "^6.24.1",
+    "babel-register": "^6.24.1",
+    "body-parser": "^1.17.2",
+    "css-loader": "^0.28.4",
+    "eslint": "^4.3.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-watch": "^3.1.2",
+    "express": "^4.15.3",
+    "extract-text-webpack-plugin": "^3.0.0",
+    "handlebars": "^4.0.10",
+    "handlebars-loader": "^1.5.0",
+    "hbs": "^4.0.1",
+    "html-loader": "^0.4.5",
+    "isomorphic-fetch": "^2.2.1",
+    "localtunnel": "^1.8.3",
+    "mocha": "^3.4.2",
+    "node-sass": "^4.5.3",
+    "nodemailer": "^4.0.1",
+    "nodemon": "^1.11.0",
+    "npm-run-all": "^4.0.2",
+    "nsp": "^2.6.3",
+    "pm2": "^2.6.1",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.18.2",
+    "vue": "^2.4.2",
+    "webpack": "^3.3.0",
+    "webpack-dev-middleware": "^1.11.0",
+    "webpack-hot-middleware": "^2.18.2",
+    "whatwg-fetch": "^2.0.3"
+  },
+  "dependencies": {
+    "es6-promise": "^4.1.1"
+  }
+}
