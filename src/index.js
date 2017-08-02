@@ -1,2 +1,2 @@
 import colors from '../colors';
-import './sass/style.sass';
+// import './sass/style.sass';
