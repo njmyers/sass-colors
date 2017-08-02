@@ -1,5 +1,6 @@
 import path from 'path';
 import webpack from 'webpack';
+import marked from 'marked'
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 
 export default {
@@ -16,20 +17,14 @@ export default {
 	},
 	module: {
 		loaders: [
-			// {test: /\.html$/, loaders: ['html-loader']},
 			{test: /\.js$/, exclude: /node_modules/, loaders: ['babel-loader']},
-			// {test: /\.sass$/, loaders: ['style-loader', 'css-loader', 'sass-loader']},
-			{test: /\.hbs$/, loaders: ['handlebars-loader']},
-			{test: /\.sass$/, use: ExtractTextPlugin.extract({
-				fallback: 'style-loader',
-				use: ['css-loader', 'sass-loader']
-			})}
-			// {test: /\.css$/, loaders: ['style-loader','css-loader']}
+			{test: /\.sass$/, loaders: ['style-loader', 'css-loader', 'sass-loader']},
+			{test: /\.md$/, loaders: ['html-loader', 'markdown-loader']},
+			{test: /\.hbs$/, loaders: ['handlebars-loader']}
 		]
 	},
 	plugins: [
 	    new webpack.HotModuleReplacementPlugin(),
 	    new webpack.NoEmitOnErrorsPlugin(),
-	    new ExtractTextPlugin('styles.css')
     ]
 }

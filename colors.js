@@ -1,6 +1,3 @@
-// const fs = require('fs');
-// import fs from 'fs';
-
 const scale = 255;
 const variety = 100; // 10 < variety < 245
 const opacity = 1;
@@ -53,26 +50,26 @@ function normal(arr) {
 }
 
 var formulas = {
-	lightest: lightening(1.3),
-	lighter: lightening(1.5),
-	light: lightening(2),
+	lightest: lightening(1.2),
+	lighter: lightening(1.3),
+	light: lightening(1.5),
 	normal: normal(),
-	dark: darkening(1.3),
-	darker: darkening(1.5),
-	darkest: darkening(2)
+	dark: darkening(1.2),
+	darker: darkening(1.3),
+	darkest: darkening(1.5)
 }
 
 var colors = {
 	red: [255, 0, 0],
-	magenta: [255, 0, 127],
-	violet: [255, 0, 255],
+	rose: [255, 0, 127],
+	magenta: [255, 0, 255],
 	purple: [127, 0, 255],
 	blue: [0, 0, 255],
-	something: [0, 127, 255],
+	cobalt: [0, 127, 255],
 	cyan: [0, 255, 255],
 	aqua: [0, 255, 127],
 	green: [0, 255, 0],
-	mustard: [127, 255, 0],
+	lime: [127, 255, 0],
 	yellow: [255, 255, 0],
 	orange: [255, 127, 0]
 }
@@ -87,7 +84,7 @@ for (var color in colors) {
 		console.log(thisColor);
 		var colorName;
 		// console.log(shade);
-		(shade === 'normal') ? colorName = color : colorName = shade + '-' + color;
+		(shade === 'normal') ? colorName = color : colorName = color + '-' + shade;
 		html += `<div class="boxes" style="background: rgba(${thisColor})">This is ${colorName}</div>`;
 		sass += `\$${colorName}: rgba(${thisColor})\n`
 	}
@@ -95,7 +92,7 @@ for (var color in colors) {
 
 
 document.getElementById('pallet').innerHTML = html;
-document.getElementById('sass').innerHTML = '<code>' + sass + '</code>';
+document.getElementById('sass').innerHTML = '<pre><code>' + sass + '</code></pre>';
 
 // console.log(formulas.dark([255, 0, 0]))
 
