@@ -32,4 +32,4 @@ Dark
 Darker
 Darkest
 
-So $lime-lightest would be three shades lighter then the absolute combination of yellow and green. The shades can can be changed by a modifier so that the shading can be as fine or as coarse as you wish. In addition to the shade modifier there is also an alpha channel modifier to create transparent shades of the same colors. Since this is basically a Sass variable sheet there is no reason not to create your very own sheet and include it in your files as it will not affect the size of your final compiled CSS files.
+The color $lime-lightest would be three shades lighter then the absolute combination of yellow and green. The shades can can be changed by a modifier so that the shading can be as fine or as coarse as you wish. In addition to the shade modifier there is also an alpha channel modifier to create transparent shades of the same colors. Since this is basically a Sass variable sheet there is no reason not to create your very own sheet and include it in your files as it will not affect the size of your final compiled CSS files.
