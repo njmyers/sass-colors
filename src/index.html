@@ -2,13 +2,19 @@
 <html>
 <head>
 	<title>Sass Colors</title>
-	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-<div id="description" class="padded"></div>
-<div id="pallet"></div>
-<div id="sass" class="padded"></div>
+<article id="description"></article>
+<div class="controls">
+	<h3>Enter opacity between 0 - 1</h3>
+	<input id="opacity" name="opacity" value="1" placeholder="1">
+	<h3>Enter slope between 0 - 1</h3>
+	<input id="slope" name="slope" value=".5" placeholder=".5">
+	<button id="generate">Generate</button>
+</div>
+<article id="pallet"></article>
 
 <script type="text/javascript" src="bundle.js"></script>
 </body>

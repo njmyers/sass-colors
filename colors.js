@@ -1,6 +1,30 @@
-const scale = 255;
-const variety = 100; // 10 < variety < 245
-const opacity = 1;
+'use strict';
+
+var opacity = 1,
+	slope = 1,
+	formulas = {
+		lightest: lightening(1.2),
+		lighter: lightening(1.3),
+		light: lightening(1.5),
+		normal: normal(),
+		dark: darkening(1.2),
+		darker: darkening(1.3),
+		darkest: darkening(1.5)
+	},
+	colors = {
+		red: [255, 0, 0],
+		rose: [255, 0, 127],
+		magenta: [255, 0, 255],
+		purple: [127, 0, 255],
+		blue: [0, 0, 255],
+		cobalt: [0, 127, 255],
+		cyan: [0, 255, 255],
+		aqua: [0, 255, 127],
+		green: [0, 255, 0],
+		lime: [127, 255, 0],
+		yellow: [255, 255, 0],
+		orange: [255, 127, 0]
+	};
 
 function darkening (divisor) {
 	return function (args) {
@@ -8,11 +32,9 @@ function darkening (divisor) {
 		for (var i = 0; i < args.length; i ++ ) {
 			if (!args[i]) {
 				str += args[i] + ', ';
-				// console.log(args[i]);
 			}
 			else {
 				str += (Math.round(args[i] / divisor)) + ', ';
-				// console.log(Math.round(args[i] / divisor));
 			}
 		}
 		str += opacity
@@ -26,11 +48,9 @@ function lightening (divisor) {
 		for (var i = 0; i < args.length; i ++ ) {
 			if (args[i] === 255) {
 				str += args[i] + ', ';
-				// console.log(args[i]);
 			}
 			else {
 				str += (Math.round((args[i] + 127) / divisor)) + ', ';
-				// console.log(Math.round((args[i] + 127) / divisor));
 			}
 		}
 		str += opacity;
@@ -49,69 +69,49 @@ function normal(arr) {
 	}
 }
 
-var formulas = {
-	lightest: lightening(1.2),
-	lighter: lightening(1.3),
-	light: lightening(1.5),
-	normal: normal(),
-	dark: darkening(1.2),
-	darker: darkening(1.3),
-	darkest: darkening(1.5)
+function downloadURI(uri, name) {
+  var link = document.createElement('a');
+  link.download = name;
+  link.href = uri;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }
 
-var colors = {
-	red: [255, 0, 0],
-	rose: [255, 0, 127],
-	magenta: [255, 0, 255],
-	purple: [127, 0, 255],
-	blue: [0, 0, 255],
-	cobalt: [0, 127, 255],
-	cyan: [0, 255, 255],
-	aqua: [0, 255, 127],
-	green: [0, 255, 0],
-	lime: [127, 255, 0],
-	yellow: [255, 255, 0],
-	orange: [255, 127, 0]
-}
+function generate() {
+	var html = '',
+		sass = '',
+		code = '',
+		name = '';
 
-var html = '';
-var sass = '';
+	for (var color in colors) {
+		for (var shade in formulas) {
+			code = formulas[shade](colors[color]);
+			(shade === 'normal') ? name = color : name = color + '-' + shade;
+			html += `<section class="boxes" style="background: rgba(${code})">
+					<p>Name: \$${name}</p>
+					<p>Code: rgba(${code})<p> 
+					</section>`;
+			sass += `\$${name}: rgba(${code})\n`
+		}
+	}
 
-for (var color in colors) {
-	for (var shade in formulas) {
-		// var thisColor = formulas[shade].call(this, colors[color]);
-		var thisColor = formulas[shade](colors[color]);
-		console.log(thisColor);
-		var colorName;
-		// console.log(shade);
-		(shade === 'normal') ? colorName = color : colorName = color + '-' + shade;
-		html += `<div class="boxes" style="background: rgba(${thisColor})">This is ${colorName}</div>`;
-		sass += `\$${colorName}: rgba(${thisColor})\n`
+	var uri = 'data:application/octet-stream,' + encodeURIComponent(sass);
+
+	return {
+		html, // Colors
+		sass, // Raw Code
+		uri   // Downloadable URI  
 	}
 }
 
-
-document.getElementById('pallet').innerHTML = html;
-document.getElementById('sass').innerHTML = '<pre><code>' + sass + '</code></pre>';
-
-// console.log(formulas.dark([255, 0, 0]))
-
-
-/*
-Red (255, 0, 0, 1) //
-Magenta (255, 0, 127, 1)
-Violet (255, 0, 255, 1)
-Purple(127, 0, 255, 1)
-Blue (0, 0, 255, 1) // 
-Something (0, 127, 255, 1)
-Cyan (0, 255, 255, 1)
-Aqua (0, 255, 127, 1)
-Green (0, 255, 0, 1) // darkest (0, 100, 0) lightest (100, 255, 100)
-Mustard (127, 255, 0, 1)
-Yellow (255, 255, 0, 1) // darkest(127, 127, 0) lightest (255, 255, 127)
-Orange (255, 127, 0, 1)
-
-var primary = ['red', 'blue', 'green'];
-var secondary = ['violet', 'cyan', 'yellow'];
-var tertiary = ['magenta', 'purple', 'something', 'aqua', 'mustard', 'orange'];
-*/
+export default function gen() {
+	// Get Input Values First
+	opacity = document.getElementById('opacity').value;
+	slope = document.getElementById('slope').value; 
+	// Generate Colors
+	var obj = generate();
+	// Add HTML and auto-download file
+	document.getElementById('pallet').innerHTML = obj.html;
+	downloadURI(obj.uri, 'colors.sass')
+}
