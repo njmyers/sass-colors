@@ -4,12 +4,12 @@ var opacity = 1,
 	slope = 1,
 	formulas = {
 		lightest: lightening(1.2),
-		lighter: lightening(1.3),
-		light: lightening(1.5),
+		lighter: lightening(1.4),
+		light: lightening(1.7),
 		normal: normal(),
 		dark: darkening(1.2),
-		darker: darkening(1.3),
-		darkest: darkening(1.5)
+		darker: darkening(1.4),
+		darkest: darkening(1.6)
 	},
 	colors = {
 		red: [255, 0, 0],
@@ -23,7 +23,8 @@ var opacity = 1,
 		green: [0, 255, 0],
 		lime: [127, 255, 0],
 		yellow: [255, 255, 0],
-		orange: [255, 127, 0]
+		orange: [255, 127, 0],
+		grey: [127, 127, 127]
 	};
 
 function darkening (divisor) {
@@ -73,9 +74,8 @@ function downloadURI(uri, name) {
 	var link = document.createElement('a');
 	link.download = name;
 	link.href = uri;
-	document.body.appendChild(link);
-	link.click();
-	document.body.removeChild(link);
+	link.innerText = `download ${name}`
+	document.getElementById('controls').appendChild(link);
 }
 
 function generate() {
@@ -106,11 +106,13 @@ function generate() {
 }
 
 export default function gen() {
-	// if (p) document.
-	// Get Input Values First
+	// Remove Warnings
+	var valid = document.getElementById('valid');
+	if (valid) valid.remove();
+	// Get Input Values
 	opacity = document.getElementById('opacity').value;
-	slope = document.getElementById('slope').value;
-	if ((opacity && slope) > 0 && (opacity && slope) <= 1) {
+	// slope = document.getElementById('slope').value;
+	if (opacity > 0 && slope > 0 && opacity <= 1 && slope <= 1) {
 		// Generate Colors
 		var obj = generate();
 		// Add HTML and auto-download file
@@ -119,6 +121,7 @@ export default function gen() {
 	}
 	else {
 		var p = document.createElement('p');
+		p.id = 'valid';
 		p.innerHTML = 'Please enter valid values';
 		document.getElementById('controls').appendChild(p);
 	}

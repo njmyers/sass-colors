@@ -1,6 +1,6 @@
-# Sass Color Palette Generator
+<h1 class="stretch-letters">Sass Pallete Generator</h1>
 
-This is a color-generator that will create sass variables `$color-shade: rgba()` using rgba color codes. Since secondary and especially tertiary color names are not standardized I have made the naming system as follows.
+This is a color generator that will create sass variables `$color-shade: rgba()` using rgba color codes. Since secondary and especially tertiary color names are not standardized I have made the naming system as follows.
 
 #### Primary colors
 
@@ -22,6 +22,7 @@ This is a color-generator that will create sass variables `$color-shade: rgba()`
 * Aqua (Cyan and Green)
 * Lime (Yellow and Green)
 * Orange (Yellow and Red)
+* Grey (Magenta, Cyan and Yellow)
 
 #### Modifier
 
@@ -32,4 +33,8 @@ This is a color-generator that will create sass variables `$color-shade: rgba()`
 * Darker
 * Darkest
 
-The color `$lime-lightest` would be three shades lighter then the absolute combination of yellow and green. The shades can can be changed by a modifier so that the shading can be as fine or as coarse as you wish. In addition to the shade modifier there is also an alpha channel modifier to create transparent shades of the same colors. Since this is basically a Sass variable sheet there is no reason not to create your very own sheet and include it in your files as it will not affect the size of your final compiled CSS files.
+The color `$rose-darkest` would be three shades darker then the combination of red and magenta while `$lime-light` would be one shade lighter then yellow and green. The shades can can be changed by a modifier so that the shading can be as fine or as coarse as you wish. 
+
+In addition to the shade modifier there is also an alpha channel modifier to create transparent shades of the same colors.
+
+Since this is a sass variable sheet you can include it in your `style.sass` and it will not affect the size of your final compiled CSS files.

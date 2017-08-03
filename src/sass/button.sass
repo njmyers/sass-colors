@@ -1,0 +1,49 @@
+// button.sass
+
+$darkener: 5
+
+button
+	cursor: pointer
+	padding: 10px 15px
+	border: 0 solid
+	border-radius: 5px
+
+%btn
+	font-family: 'Roboto', sans-serif
+	background: $grey-lightest
+	font-weight: bold
+	margin: 15px 0
+	+transition(background ease .15s)
+
+.btn
+	@extend %btn
+	&-blue
+		@extend %btn
+		background: $blue
+	&-red
+		@extend %btn
+		background: $red
+	&-yellow
+		@extend %btn
+		background: $yellow
+	&-green
+		@extend %btn
+		background: $green
+
+.btn
+	&:hover
+		background: darken($grey-lightest, $darkener)
+	&-blue:hover
+		background: darken($blue, $darkener)
+	&-red:hover
+		background: darken($red, $darkener)
+	&-yellow:hover
+		background: darken($yellow, $darkener)
+	&-green:hover
+		background: darken($green, $darkener)
+
+button:active
+	box-shadow: inset 0px 0px 1px 0px rgba(0, 0, 0, 0.2);
+button:active,
+button:focus
+	outline: none
