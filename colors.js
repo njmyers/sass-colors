@@ -37,9 +37,9 @@ function darkening (divisor) {
 				str += (Math.round(args[i] / divisor)) + ', ';
 			}
 		}
-		str += opacity
-		return str
-	}
+		str += opacity;
+		return str;
+	};
 }
 
 function lightening (divisor) {
@@ -55,27 +55,27 @@ function lightening (divisor) {
 		}
 		str += opacity;
 		return str;
-	}
+	};
 }
 
 function normal(arr) {
 	return function(arr) {
 		var str = '';
 		for (var i = 0; i < arr.length; i ++) {
-			str += arr[i] + ', '
+			str += arr[i] + ', ';
 		}
-		str += opacity
-		return str
-	}
+		str += opacity;
+		return str;
+	};
 }
 
 function downloadURI(uri, name) {
-  var link = document.createElement('a');
-  link.download = name;
-  link.href = uri;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+	var link = document.createElement('a');
+	link.download = name;
+	link.href = uri;
+	document.body.appendChild(link);
+	link.click();
+	document.body.removeChild(link);
 }
 
 function generate() {
@@ -89,10 +89,10 @@ function generate() {
 			code = formulas[shade](colors[color]);
 			(shade === 'normal') ? name = color : name = color + '-' + shade;
 			html += `<section class="boxes" style="background: rgba(${code})">
-					<p>Name: \$${name}</p>
-					<p>Code: rgba(${code})<p> 
+					<span>Name: $${name}</span>
+					<span>Code: rgba(${code})<span> 
 					</section>`;
-			sass += `\$${name}: rgba(${code})\n`
+			sass += `$${name}: rgba(${code})\n`;
 		}
 	}
 
@@ -102,16 +102,24 @@ function generate() {
 		html, // Colors
 		sass, // Raw Code
 		uri   // Downloadable URI  
-	}
+	};
 }
 
 export default function gen() {
+	// if (p) document.
 	// Get Input Values First
 	opacity = document.getElementById('opacity').value;
-	slope = document.getElementById('slope').value; 
-	// Generate Colors
-	var obj = generate();
-	// Add HTML and auto-download file
-	document.getElementById('pallet').innerHTML = obj.html;
-	downloadURI(obj.uri, 'colors.sass')
+	slope = document.getElementById('slope').value;
+	if ((opacity && slope) > 0 && (opacity && slope) <= 1) {
+		// Generate Colors
+		var obj = generate();
+		// Add HTML and auto-download file
+		document.getElementById('pallet').innerHTML = obj.html;
+		downloadURI(obj.uri, 'colors.sass');
+	}
+	else {
+		var p = document.createElement('p');
+		p.innerHTML = 'Please enter valid values';
+		document.getElementById('controls').appendChild(p);
+	}
 }

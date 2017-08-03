@@ -24,8 +24,8 @@ app.use(webpackHotMiddleware(compiler, {
 
 app.route('/')
 	.get(function (req, res) {
-		res.sendFile(path.join(__dirname + '/src/index.html'))
-	})
+		res.sendFile(path.join(__dirname + '/src/index.html'));
+	});
 
 app.listen(4040);
 

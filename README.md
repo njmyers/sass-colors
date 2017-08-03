@@ -1,6 +1,6 @@
 # Sass Color Palette Generator
 
-This is a color-generator that will create sass variables `$color-shade: rgba()` using rgba color codes. Since secondary and especially tertiary color names are not completely synchronized I have created the naming system as follows.
+This is a color-generator that will create sass variables `$color-shade: rgba()` using rgba color codes. Since secondary and especially tertiary color names are not standardized I have made the naming system as follows.
 
 #### Primary colors
 
