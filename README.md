@@ -1,4 +1,4 @@
-<h1 class="stretch-letters">Sass Pallete Generator</h1>
+<h1 class="big">Sass Pallete Generator</h1>
 
 This is a color generator that will create sass variables `$color-shade: rgba()` using rgba color codes. Since secondary and especially tertiary color names are not standardized I have made the naming system as follows.
 
