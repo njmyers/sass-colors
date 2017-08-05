@@ -18,8 +18,10 @@ var opacity = 1,
 			orange: [255, 127, 0],
 			grey: [127, 127, 127]
 		},
-		prefixes: ['lightest', 'lighter', 'light', 'normal', 'dark', 'darker', 'darkest'],
-		rgbaColors: []
+		prefixes: 
+			['lightest', 'lighter', 'light', 'normal', 'dark', 'darker', 'darkest'],
+		rgbaColors: 
+			[]
 	};
 
 
@@ -27,41 +29,49 @@ data.normal = function() {
 	return this;
 }
 
-data.light = function() {
-	if (this === 255) return this;
-	else return Math.round(this + (.4 * 127));
+data.changer = function(color, keyword) {
+
+ 	var coefficient,
+ 		ratio,
+		l = /light/i,
+		d = /dark/i,
+		er = /er/i,
+		est = /est/i;
+
+	if (est.test(keyword) ) ratio = 0.6; // -est
+	else if (er.test(keyword) ) ratio = 0.4; // er
+	else ratio = 0.2; //
+
+	// coefficient for secondary colors must be 2x in order to create same amout of variance
+	(color == 'yellow' || color == 'cyan' || color == 'magenta') ? coefficient = 255 : coefficient = 255 / 2;
+
+	if (l.test(keyword) ) {
+		if (this === 255) return this;
+		else {
+			return Math.round(this + (ratio * coefficient * 1.05) );
+		}
+	}
+
+	else if (d.test(keyword) ) {
+		if (!this) return this;
+		else {
+			return Math.round(this - (ratio * coefficient * 1) );
+		}
+	}
+
+	else {
+		return this;
+	}
+
 }
 
-data.lighter = function() {
-	if (this === 255) return this;
-	else return Math.round(this + (.6 * 127));
-}
-
-data.lightest = function() {
-	if (this === 255) return this;
-	else return Math.round(this + (.8 * 127));
-}
-
-data.dark = function() {
-	if (!this) return this;
-	else return Math.round(this - (.2 * 127));
-}
-
-data.darker = function() {
-	if (!this) return this;
-	else return Math.round(this - (.35 * 127));
-}
-
-data.darkest = function() {
-	if (!this) return this;
-	else return Math.round(this - (.5 * 127));
-}
-
-data.shader = function(keyword) {
+data.shader = function(color, keyword) {
+	// console.log(args);
 	// console.log('Shader this reference: ' + this);
-	var arr = this.map(function(each) {
-		return data[keyword].call(each); // Call correct function by keyword on numeric value
-	});
+	var arr = this.map( (each) => {
+		// console.log(args);
+		return data.changer.call(each, color, keyword)
+	});//, keyword, ); // Call correct function by keyword on numeric value
 	// console.log('shader return array: ' + arr);
 	return arr;
 }
@@ -106,14 +116,13 @@ data.uri = function(code) {
 data.gen = function() {
 	var arr = [];
 	for (var color in this.colors) {
-		// console.log(this.prefixes);
 		for (var i = 0; i < this.prefixes.length; i ++) {
-			var shade = this.shader.call(this.colors[color], this.prefixes[i]);//'normal'); // Eventually need to call all formulas
-			var name = this.namer(this.prefixes[i], [color]);
+			var shade = this.shader.call(this.colors[color], color, this.prefixes[i]),
+				name = this.namer(this.prefixes[i], [color]);
 			arr.push({ [name]: this.stringifyRGBA.call(shade) });
 		}
 	}
-	console.log(arr);
+	// console.log(arr);
 	return arr;
 	// this.rgbaColors[color] console.log(this.rgbaColors);
 }
@@ -122,15 +131,15 @@ data.gen = function() {
 
 function genComponents() {
 
-	var myArr = data.gen.call(data, 'normal');
-	var sass = data.sass.call(myArr);
-	var html = data.html.call(myArr);
-	var uri = data.uri(sass);
+	var myArr = data.gen.call(data, 'normal'),
+		sass = data.sass.call(myArr),
+		html = data.html.call(myArr),
+		uri = data.uri(sass);
 
 	return {
-		html, // Colors
-		sass, // Raw Code
-		uri   // Downloadable URI  
+		html, // Colors HTML with inline tag
+		sass, // Raw Code Sass Format
+		uri 
 	};
 }
 
