@@ -17,7 +17,9 @@ export default {
 	module: {
 		loaders: [
 			{test: /\.js$/, exclude: /node_modules/, loaders: ['babel-loader']},
+			{test: /\.md$/, loaders: ['html-loader', 'markdown-loader']},
 			{test: /\.hbs$/, loaders: ['handlebars-loader']},
+			{test: /\.(gif|png|jpe?g|svg)$/i, loaders: ['file-loader']},
 			{test: /\.sass$/, use: ExtractTextPlugin.extract({
 				fallback: 'style-loader',
 				use: ['css-loader', 'sass-loader']
